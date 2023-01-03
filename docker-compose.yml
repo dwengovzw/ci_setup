@@ -1,8 +1,78 @@
-version: "1.0"
+version: "3.8"
 services:
   web: 
-    build: ./apache
+    container_name: "apache"
+    restart: always
+    image: web_server
     ports: 
-      - "8080:80"
-      - "433:433"
-    
+      - "8081:80"
+      - "43303:433"
+    volumes:
+      - ./apache/httpd.conf:/etc/apache2/httpd.conf
+      - ./apache/html:/var/www/html
+    networks:
+      - "docker"
+    environment:
+      - server_name=localhost
+  jenkins:
+    container_name: jenkins_server
+    restart: always
+    networks:
+      - docker
+    environment:
+      - 'DOCKER_HOST=tcp://docker:2376'
+      - DOCKER_CERT_PATH=/certs/client
+      - DOCKER_TLS_VERIFY=1
+      - JENKINS_OPTS="--prefix=/jenkins"
+    volumes:
+            - 'jenkins-data:/var/jenkins_home'
+            - 'jenkins-docker-certs:/certs/client:ro'
+    image: 'jenkins_server'
+  mongodb:
+    container_name: mongodb_server
+    image: mongodb_server
+    restart: always
+    networks:
+      - docker
+    #environment:
+    #  MONGO_INITDB_ROOT_USERNAME: root
+    #  MONGO_INITDB_ROOT_PASSWORD: rootpassword
+    volumes:
+      - mongodb_data_container:/data/db
+
+  #blockly_staging:
+  #  container_name: blockly_server
+  #  restart: always
+  #  networks:
+  #    - docker
+  #  environment:
+  #    - MONGODB_CONNSTRING=mongodb_server
+#  secure_web: 
+#    container_name: "apache_ssl"
+#    image: secure_web_server
+#    ports: 
+#      - "8081:80"
+#      - "43303:433"
+#    volumes:
+#      - ./apache/httpd.conf:/etc/apache2/httpd.conf
+#      - ./apache/html:/var/www/html
+#      - /docker-volumes/etc/letsencrypt/live/blockly-staging.dwengo.org/cert.pem:/etc/letsencrypt/live/blockly-staging.dwengo.org/cert.pem
+#      - /docker-volumes/etc/letsencrypt/live/blockly-staging.dwengo.org/fullchain.pem:/etc/letsencrypt/live/blockly-staging.dwengo.org/fullchain.pem
+#      - /docker-volumes/etc/letsencrypt/live/blockly-staging.dwengo.org/privkey.pem:/etc/letsencrypt/live/blockly-staging.dwengo.org/privkey.pem
+#    networks:
+#      - "docker-network"
+#    environment:
+#      - server_name=blockly-staging.dwengo.org
+networks:
+  docker:
+    driver: "bridge"
+volumes:
+  jenkins-data:
+    labels:
+      org.dwengo.description: "Jenkins data"
+  jenkins-docker-certs:
+    labels:
+      org.dwengo.description: "Jenkins certs"
+  mongodb_data_container:
+    labels:
+      org.dwengo.description: "Mongodb data"
