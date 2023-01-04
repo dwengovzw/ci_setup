@@ -1,12 +1,16 @@
-FROM jenkins/jenkins:2.384
+FROM jenkins/jenkins:lts
+
 USER root
-RUN apt-get update && apt-get install -y lsb-release
-RUN curl -fsSLo /usr/share/keyrings/docker-archive-keyring.asc \
-  https://download.docker.com/linux/debian/gpg
-RUN echo "deb [arch=$(dpkg --print-architecture) \
-  signed-by=/usr/share/keyrings/docker-archive-keyring.asc] \
-  https://download.docker.com/linux/debian \
-  $(lsb_release -cs) stable" > /etc/apt/sources.list.d/docker.list
-RUN apt-get update && apt-get install -y docker-ce-cli
+RUN apt-get update && apt-get install -y chromium tree nano curl sudo ca-certificates fonts-liberation libasound2 libatk-bridge2.0-0 libatk1.0-0 libc6 libcairo2 libcups2 libdbus-1-3 libexpat1 libfontconfig1 libgbm1 libgcc1 libglib2.0-0 libgtk-3-0 libnspr4 libnss3 libpango-1.0-0 libpangocairo-1.0-0 libstdc++6 libx11-6 libx11-xcb1 libxcb1 libxcomposite1 libxcursor1 libxdamage1 libxext6 libxfixes3 libxi6 libxrandr2 libxrender1 libxss1 libxtst6 lsb-release wget xdg-utils
+RUN curl https://get.docker.com/builds/Linux/x86_64/docker-latest.tgz | tar xvz -C /tmp/ && mv /tmp/docker/docker /usr/bin/docker
+RUN curl -L "https://github.com/docker/compose/releases/download/1.23.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+RUN chmod 755 /usr/local/bin/docker-compose
+RUN groupadd docker
+RUN usermod -aG sudo jenkins
+RUN newgrp docker
+RUN echo 'kernel.unprivileged_userns_clone=1' > /etc/sysctl.d/userns.conf
+RUN echo "jenkins ALL=(ALL:ALL) NOPASSWD:ALL" >> /etc/sudoers
+
 USER jenkins
-RUN jenkins-plugin-cli --plugins "blueocean:1.26.0 docker-workflow:563.vd5d2e5c4007f"
+COPY plugins.txt /usr/share/jenkins/ref/plugins.txt
+RUN /usr/local/bin/install-plugins.sh < /usr/share/jenkins/ref/plugins.txt

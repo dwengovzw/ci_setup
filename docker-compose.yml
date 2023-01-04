@@ -14,19 +14,24 @@ services:
       - "docker"
     environment:
       - server_name=localhost
+  docker_registry:
+    container_name: "docker_registry"
+    image: "registry:latest"
+    restart: always
+    networks:
+      - docker
   jenkins:
     container_name: jenkins_server
     restart: always
     networks:
       - docker
     environment:
-      - 'DOCKER_HOST=tcp://docker:2376'
-      - DOCKER_CERT_PATH=/certs/client
-      - DOCKER_TLS_VERIFY=1
       - JENKINS_OPTS="--prefix=/jenkins"
+      - '--cap-add=SYS_ADMIN'
     volumes:
             - 'jenkins-data:/var/jenkins_home'
             - 'jenkins-docker-certs:/certs/client:ro'
+            - '/var/run/docker.sock:/var/run/docker.sock'
     image: 'jenkins_server'
   mongodb:
     container_name: mongodb_server
