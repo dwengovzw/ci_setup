@@ -14,8 +14,8 @@ RUN groupmod -g 999 docker
 RUN echo 'kernel.unprivileged_userns_clone=1' > /etc/sysctl.d/userns.conf
 RUN echo "jenkins ALL=(ALL:ALL) NOPASSWD:ALL" >> /etc/sudoers
 
-COPY JenkinsFile /usr/share/jenkins/ref/JenkinsFile
-RUN chown jenkins:jenkins /usr/share/jenkins/ref/JenkinsFile
+COPY Dockerfile.jenkinsAgent /usr/share/jenkins/ref/Dockerfile.jenkinsAgent
+RUN chown jenkins:jenkins /usr/share/jenkins/ref/Dockerfile.jenkinsAgent
 
 USER jenkins
 
