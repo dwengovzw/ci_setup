@@ -11,6 +11,10 @@ RUN newgrp docker
 RUN echo 'kernel.unprivileged_userns_clone=1' > /etc/sysctl.d/userns.conf
 RUN echo "jenkins ALL=(ALL:ALL) NOPASSWD:ALL" >> /etc/sudoers
 
+COPY JenkinsFile /usr/share/jenkins/ref/JenkinsFile
+RUN chown jenkins:jenkins /usr/share/jenkins/ref/JenkinsFile
+
 USER jenkins
+
 COPY plugins.txt /usr/share/jenkins/ref/plugins.txt
-RUN /usr/local/bin/install-plugins.sh < /usr/share/jenkins/ref/plugins.txt
+#RUN jenkins-plugin-cli -f /usr/share/jenkins/ref/plugins.txt
