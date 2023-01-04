@@ -6,8 +6,11 @@ RUN curl https://get.docker.com/builds/Linux/x86_64/docker-latest.tgz | tar xvz 
 RUN curl -L "https://github.com/docker/compose/releases/download/1.23.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 RUN chmod 755 /usr/local/bin/docker-compose
 RUN groupadd docker
-RUN usermod -aG sudo jenkins
+RUN usermod -a -G sudo jenkins
+RUN usermod -a -G docker jenkins
 RUN newgrp docker
+# Set the docker group id equal to the host docker group id
+RUN groupmod -g 999 docker  
 RUN echo 'kernel.unprivileged_userns_clone=1' > /etc/sysctl.d/userns.conf
 RUN echo "jenkins ALL=(ALL:ALL) NOPASSWD:ALL" >> /etc/sudoers
 
