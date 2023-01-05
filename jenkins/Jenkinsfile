@@ -19,7 +19,7 @@ pipeline {
         }
         stage('Build') { 
             steps {
-                sh 'cd blockly_repo && sudo npm install' 
+                sh 'cd blockly_repo && npm install' 
             }
         }
     }
