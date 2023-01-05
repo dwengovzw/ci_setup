@@ -15,7 +15,7 @@ RUN groupadd docker
 RUN usermod -a -G docker jenkins
 RUN newgrp docker
 # Set the docker group id equal to the host docker group id
-# TODO use command line arguments to get docker group id from host
+# More info https://stackoverflow.com/a/55578829/13057688
 RUN groupmod -g ${DOCKERGID} docker  
 
 RUN echo 'kernel.unprivileged_userns_clone=1' > /etc/sysctl.d/userns.conf

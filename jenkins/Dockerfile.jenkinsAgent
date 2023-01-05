@@ -1,5 +1,7 @@
 FROM node:18.12
 
+# More info https://stackoverflow.com/a/55578829/13057688
+
 ARG JENKINSUID
 ARG JENKINSGID
 ARG DOCKERGID

@@ -7,6 +7,13 @@ pipeline {
         }
     }
     stages {
+        stage('Clone') { 
+            steps {
+                sh 'mkdir blockly_repo'
+                cd 'blockly_repo' 
+                sh 'git clone https://github.com/dwengovzw/Blockly-for-Dwenguino.git .'
+            }
+        }
         stage('Build') { 
             steps {
                 sh 'npm install' 
