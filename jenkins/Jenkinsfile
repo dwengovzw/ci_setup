@@ -10,7 +10,7 @@ pipeline {
         stage('Clone') { 
             steps {
                 sh 'mkdir blockly_repo'
-                cd 'blockly_repo' 
+                sh 'cd blockly_repo' 
                 sh 'git clone https://github.com/dwengovzw/Blockly-for-Dwenguino.git .'
             }
         }
