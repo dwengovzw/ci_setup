@@ -40,3 +40,7 @@ RUN groupmod -g ${DOCKERGID} docker
 RUN cat /etc/passwd
 RUN cat /etc/group
 RUN useradd -c "Jenkins user" -g ${JENKINSGID} -G ${DOCKERGID} -M -N -u ${JENKINSUID} jenkins
+
+# create default home directory for jenkins user
+RUN mkdir /home/jenkins
+RUN chown -R jenkins:jenkins /home/jenkins 

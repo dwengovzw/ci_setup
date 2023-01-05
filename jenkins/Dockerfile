@@ -21,6 +21,8 @@ RUN groupmod -g ${DOCKERGID} docker
 RUN echo 'kernel.unprivileged_userns_clone=1' > /etc/sysctl.d/userns.conf
 RUN echo "jenkins ALL=(ALL:ALL) NOPASSWD:ALL" >> /etc/sudoers
 
+
+
 USER jenkins
 
 COPY plugins.txt /usr/share/jenkins/ref/plugins.txt
