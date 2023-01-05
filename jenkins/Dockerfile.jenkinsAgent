@@ -32,6 +32,6 @@ RUN echo ${JENKINSUID}
 RUN echo ${DOCKERGID}
 RUN groupadd -g ${JENKINSGID} jenkins
 RUN groupmod -g ${DOCKERGID} docker
-RUN cat /etc/passwd | awk -F: '{print $1}'
+RUN cat /etc/passwd
 RUN cat /etc/group
 RUN useradd -c "Jenkins user" -g ${JENKINSGID} -G ${DOCKERGID} -M -N -u ${JENKINSUID} jenkins
