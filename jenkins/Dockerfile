@@ -11,6 +11,7 @@ RUN usermod -a -G docker jenkins
 RUN newgrp docker
 # Set the docker group id equal to the host docker group id
 RUN groupmod -g 999 docker  
+RUN groupmod -g 998 jenkins
 RUN echo 'kernel.unprivileged_userns_clone=1' > /etc/sysctl.d/userns.conf
 RUN echo "jenkins ALL=(ALL:ALL) NOPASSWD:ALL" >> /etc/sudoers
 
