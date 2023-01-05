@@ -7,14 +7,21 @@ pipeline {
         }
     }
     stages {
-        stage('Clone') { 
+        stage('INFO') {
             steps {
-                sh 'pwd'
-                sh 'ls -al'
-                sh 'rm -Rf blockly_repo'
-                sh 'mkdir blockly_repo'
-                sh 'cd blockly_repo' 
-                sh 'git clone --single-branch --branch develop https://github.com/dwengovzw/Blockly-for-Dwenguino.git ./blockly_repo'
+                sh 'docker images'
+                sh 'docker network ls'
+            }
+        }
+        stage('Clone') { 
+            dir ('repository') {
+                checkout(scm: [
+                    $class: 'GitSCM', 
+                    branches: [[name: 'develop']], 
+                    userRemoteConfigs: [
+                        [ url: 'https://github.com/dwengovzw/Blockly-for-Dwenguino.git' ]
+                    ]
+                ])
             }
         }
         stage('Build') { 
