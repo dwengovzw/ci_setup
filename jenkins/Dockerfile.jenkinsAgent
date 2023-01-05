@@ -27,6 +27,9 @@ RUN apt-get -y update && \
 
 
 # Setup users and groups
+RUN echo ${JENKINSGID}
+RUN echo ${JENKINSUID}
+RUN echo ${DOCKERGID}
 RUN groupadd -g ${JENKINSGID} jenkins
 RUN groupmod -g ${DOCKERGID} docker
 RUN cat /etc/passwd | awk -F: '{print $1}'
