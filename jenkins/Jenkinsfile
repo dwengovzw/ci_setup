@@ -33,22 +33,22 @@ pipeline {
                 }
             }
         }
-        //stage('Build') { 
-        //    steps {
-        //        dir ('repository'){
-        //            sh 'npm run build-dev' 
-        //        }
-        //    }
-        //}
-        //stage('Test') { 
-        //    steps {
-        //        dir ('repository'){
-        //            sh 'cp environments/test.env .env'
-        //            sh 'npm run test' 
-        //        }
-        //        
-        //    }
-        //}
+        stage('Build') { 
+            steps {
+                dir ('repository'){
+                    sh 'npm run build-dev' 
+                }
+            }
+        }
+        stage('Test') { 
+            steps {
+                dir ('repository'){
+                    sh 'cp environments/test.env .env'
+                    sh 'npm run test' 
+                }
+                
+            }
+        }
         stage('Deploy') { 
             steps {
                 dir ('repository'){
