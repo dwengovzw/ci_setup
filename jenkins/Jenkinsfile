@@ -14,14 +14,16 @@ pipeline {
             }
         }
         stage('Clone') { 
-            dir ('repository') {
-                checkout(scm: [
-                    $class: 'GitSCM', 
-                    branches: [[name: 'develop']], 
-                    userRemoteConfigs: [
-                        [ url: 'https://github.com/dwengovzw/Blockly-for-Dwenguino.git' ]
-                    ]
-                ])
+            steps {
+                dir ('repository') {
+                    checkout(scm: [
+                        $class: 'GitSCM', 
+                        branches: [[name: 'develop']], 
+                        userRemoteConfigs: [
+                            [ url: 'https://github.com/dwengovzw/Blockly-for-Dwenguino.git' ]
+                        ]
+                    ])
+                }
             }
         }
         stage('Build') { 
