@@ -55,7 +55,7 @@ pipeline {
                     sh 'touch Dockerfile'
                     sh 'echo "FROM blockly_development_server:latest" > Dockerfile'
                     sh 'echo "COPY . /home/node/deploy/" >> Dockerfile'
-                    sh 'echo "ENTRYPOINT ["/bin/sh", "/home/node/deploy/deploy/docker_deploy.sh"]" >> Dockerfile'
+                    sh 'echo "ENTRYPOINT ["/home/node/deploy/deploy/docker_deploy.sh"]" >> Dockerfile'
                     sh 'docker ps -q --filter "name=blockly_development_server" | xargs -r docker stop'
                     sh 'docker ps -aq --filter "name=blockly_development_server" | xargs -r docker rm'
                     sh 'docker build -t blockly_development_server .'
