@@ -12,20 +12,14 @@ pipeline {
                 sh 'pwd'
                 sh 'ls -al'
                 sh 'rm -Rf blockly_repo'
-                sh 'pwd'
-                sh 'ls -al'
                 sh 'mkdir blockly_repo'
-                sh 'pwd'
-                sh 'ls -al'
                 sh 'cd blockly_repo' 
-                sh 'pwd'
-                sh 'ls -al'
-                sh 'git clone https://github.com/dwengovzw/Blockly-for-Dwenguino.git .'
+                sh 'git clone https://github.com/dwengovzw/Blockly-for-Dwenguino.git ./blockly_repo'
             }
         }
         stage('Build') { 
             steps {
-                sh 'npm install' 
+                sh 'cd blockly_repo && npm install' 
             }
         }
     }
