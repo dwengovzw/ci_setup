@@ -9,9 +9,17 @@ pipeline {
     stages {
         stage('Clone') { 
             steps {
+                sh 'pwd'
+                sh 'ls -al'
                 sh 'rm -Rf blockly_repo'
+                sh 'pwd'
+                sh 'ls -al'
                 sh 'mkdir blockly_repo'
+                sh 'pwd'
+                sh 'ls -al'
                 sh 'cd blockly_repo' 
+                sh 'pwd'
+                sh 'ls -al'
                 sh 'git clone https://github.com/dwengovzw/Blockly-for-Dwenguino.git .'
             }
         }
