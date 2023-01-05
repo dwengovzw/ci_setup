@@ -24,6 +24,7 @@ pipeline {
         }
         stage('Test') { 
             steps {
+                sh 'cp blockly_repo/environments/test.env blockly_repo/.env'
                 sh 'cd blockly_repo && npm run test' 
             }
         }
