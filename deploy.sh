@@ -6,7 +6,8 @@ cd apache
 docker build -t web_server .  # Web server without ssl
 cd ..
 cd jenkins
-docker build -t jenkins_server .  # Build jenkins container
+# Pass groupid of docker group to jenkins image so it can access the host docker socket
+docker build --build-arg DOCKERGID=`stat -c %g /var/run/docker.sock` -t jenkins_server .  # Build jenkins container
 cd ..
 cd mongodb
 docker build -t mongodb_server .  # Build jenkins container
