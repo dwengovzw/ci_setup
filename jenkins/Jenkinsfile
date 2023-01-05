@@ -22,7 +22,7 @@ pipeline {
                 sh 'npm config get prefix'
                 sh 'ls -al /home'
                 sh 'cd ~ && pwd'
-                sh 'cd blockly_repo && npm install' 
+                sh 'cd blockly_repo && npm install --legacy-peer-deps' 
             }
         }
     }
