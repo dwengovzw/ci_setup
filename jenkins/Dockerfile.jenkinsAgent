@@ -29,4 +29,5 @@ RUN apt-get -y update && \
 # Setup users and groups
 #RUN groupadd -g ${JENKINSGID} jenkins
 RUN groupmod -g ${DOCKERGID} docker
-RUN useradd -c "Jenkins user" -g ${JENKINSGID} -G ${DOCKERGID} -M -N -u ${JENKINSUID} jenkins
+RUN usermod -a -G docker jenkins
+# RUN useradd -c "Jenkins user" -g ${JENKINSGID} -G ${DOCKERGID} -M -N -u ${JENKINSUID} jenkins
