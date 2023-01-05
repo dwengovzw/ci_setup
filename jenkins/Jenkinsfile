@@ -14,15 +14,17 @@ pipeline {
                 sh 'rm -Rf blockly_repo'
                 sh 'mkdir blockly_repo'
                 sh 'cd blockly_repo' 
-                sh 'git clone https://github.com/dwengovzw/Blockly-for-Dwenguino.git ./blockly_repo'
+                sh 'git clone --single-branch --branch develop https://github.com/dwengovzw/Blockly-for-Dwenguino.git ./blockly_repo'
             }
         }
         stage('Build') { 
             steps {
-                sh 'npm config get prefix'
-                sh 'ls -al /home'
-                sh 'cd ~ && pwd'
                 sh 'cd blockly_repo && npm install --legacy-peer-deps' 
+            }
+        }
+        stage('Test') { 
+            steps {
+                sh 'cd blockly_repo && npm run test' 
             }
         }
     }
