@@ -35,9 +35,11 @@ pipeline {
         }
         stage('Test') { 
             steps {
-                sh 'cp blockly_repo/environments/test.env blockly_repo/.env'
-                sh 'cd blockly_repo && ls -al'
-                sh 'cd blockly_repo && npm run test' 
+                dir ('repository'){
+                    sh 'cp environments/test.env .env'
+                    sh 'npm run test' 
+                }
+                
             }
         }
     }
