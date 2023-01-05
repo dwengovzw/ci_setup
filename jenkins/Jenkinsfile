@@ -28,7 +28,9 @@ pipeline {
         }
         stage('Build') { 
             steps {
-                sh 'cd blockly_repo && npm install --legacy-peer-deps' 
+                dir ('repository'){
+                    sh 'npm install --legacy-peer-deps' 
+                }
             }
         }
         stage('Test') { 
