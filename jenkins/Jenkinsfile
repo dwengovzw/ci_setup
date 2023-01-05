@@ -26,10 +26,17 @@ pipeline {
                 }
             }
         }
-        stage('Build') { 
+        stage('Install') { 
             steps {
                 dir ('repository'){
                     sh 'npm install --legacy-peer-deps' 
+                }
+            }
+        }
+        stage('Build') { 
+            steps {
+                dir ('repository'){
+                    sh 'npm run build-dev' 
                 }
             }
         }
@@ -38,6 +45,22 @@ pipeline {
                 dir ('repository'){
                     sh 'cp environments/test.env .env'
                     sh 'npm run test' 
+                }
+                
+            }
+        }
+        stage('Deploy') { 
+            steps {
+                dir ('docker_deploy'){
+                    sh 'rm -Rf *'
+                    sh 'touch Dockerfile'
+                    sh 'echo "FROM blockly_development_server:latest" >> Dockerfile'
+                    sh 'echo "COPY ../repository/* /home/node/deploy/" >> Dockerfile'
+                    sh 'echo "ENTRYPOINT ["sh", "/home/node/deploy/deploy/docker_deploy.sh"]" >> Dockerfile'
+                    sh 'docker stop blockly_development_server'
+                    sh 'docker rm blockly_development_server'
+                    sh 'docker build -t blockly_development_server .'
+                    sh 'docker run --name=blockly_development_server --restart=always --network="docker_docker'
                 }
                 
             }

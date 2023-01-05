@@ -12,4 +12,7 @@ cd ..
 cd mongodb
 docker build -t mongodb_server .  # Build jenkins container
 cd ..
+cd blockly_development
+docker build -t blockly_development_server .  # Build jenkins container
+cd ..
 docker-compose up -d  # Start containers in deamon mode
