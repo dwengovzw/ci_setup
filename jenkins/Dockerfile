@@ -17,7 +17,6 @@ RUN newgrp docker
 # Set the docker group id equal to the host docker group id
 # TODO use command line arguments to get docker group id from host
 RUN groupmod -g ${DOCKERGID} docker  
-#RUN groupmod -g 998 jenkins
 
 RUN echo 'kernel.unprivileged_userns_clone=1' > /etc/sysctl.d/userns.conf
 RUN echo "jenkins ALL=(ALL:ALL) NOPASSWD:ALL" >> /etc/sudoers
@@ -25,4 +24,3 @@ RUN echo "jenkins ALL=(ALL:ALL) NOPASSWD:ALL" >> /etc/sudoers
 USER jenkins
 
 COPY plugins.txt /usr/share/jenkins/ref/plugins.txt
-#RUN jenkins-plugin-cli -f /usr/share/jenkins/ref/plugins.txt
