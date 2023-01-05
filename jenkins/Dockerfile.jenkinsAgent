@@ -25,6 +25,9 @@ RUN apt-get -y update && \
    docker-ce-cli \
    containerd.io
 
+# Change node default group and user id since it conflicts with jenkins
+RUN groupmod -g 1010 node
+RUN usermod -u 1011 node
 
 # Setup users and groups
 RUN echo ${JENKINSGID}

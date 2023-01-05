@@ -13,8 +13,6 @@ RUN newgrp docker
 # TODO use command line arguments to get docker group id from host
 RUN groupmod -g 999 docker  
 RUN groupmod -g 998 jenkins
-# This user id is copied to the jenkins docker agent, for some reason the default user id collides with an existing UID
-RUN usermod -u 2005 jenkins
 RUN echo 'kernel.unprivileged_userns_clone=1' > /etc/sysctl.d/userns.conf
 RUN echo "jenkins ALL=(ALL:ALL) NOPASSWD:ALL" >> /etc/sudoers
 
