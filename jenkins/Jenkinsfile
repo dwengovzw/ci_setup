@@ -52,9 +52,8 @@ pipeline {
         stage('Deploy') { 
             steps {
                 dir ('repository'){
-                    sh 'rm Dockerfile'
                     sh 'touch Dockerfile'
-                    sh 'echo "FROM blockly_development_server:latest" >> Dockerfile'
+                    sh 'echo "FROM blockly_development_server:latest" > Dockerfile'
                     sh 'echo "COPY . /home/node/deploy/" >> Dockerfile'
                     sh 'echo "ENTRYPOINT ["sh", "/home/node/deploy/deploy/docker_deploy.sh"]" >> Dockerfile'
                     sh 'docker ps -q --filter "name=blockly_development_server" | xargs -r docker stop'
