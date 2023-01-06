@@ -8,7 +8,6 @@ cp ./environments/* /var/environments/
 
 # Build the required docker containers
 #docker build -t secure_web_server ./apache_ssl  # Web server with ssl
-cd apache
 docker build -t web_server ./apache  # Web server without ssl
 # Pass groupid of docker group to jenkins image so it can access the host docker socket
 docker build --build-arg DOCKERGID=`stat -c %g /var/run/docker.sock` -t jenkins_server ./jenkins  # Build docker container for jenkins
