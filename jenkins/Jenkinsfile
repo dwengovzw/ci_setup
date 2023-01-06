@@ -46,6 +46,8 @@ pipeline {
                     sh 'ls /var'
                     sh 'ls /var/environments'
                     sh 'cp /var/environments/test.env .env'
+                    sh 'cat .env'
+                    sh 'wget http://localhost:12032/simulator?lang=nl | cat'
                     sh 'npm run test' 
                 }
                 
