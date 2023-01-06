@@ -43,9 +43,7 @@ pipeline {
         stage('Test') { 
             steps {
                 dir ('repository'){
-                    sh 'ls /var/environments'
-                    sh 'cat /var/environments/staging.env'
-                    sh 'cp /var/environments/staging.env .env'
+                    sh 'cp /var/environments/test.env .env'
                     sh 'npm run test' 
                 }
                 
