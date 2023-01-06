@@ -43,6 +43,8 @@ pipeline {
         stage('Test') { 
             steps {
                 dir ('repository'){
+                    sh 'ls /var/environments'
+                    sh 'cat /var/environments/staging.dev'
                     sh 'npm run test' 
                 }
                 
