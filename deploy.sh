@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# Copy the environments settings to known folder on the host machine
+# This might require root access or permission changes for this dir
+# This directory will be mounted as a bind mout in the docker containers 
+# so they can access the required environment settings.
+cp ./environments/* /var/environments/
+
 # Build the required docker containers
 #docker build -t secure_web_server ./apache_ssl  # Web server with ssl
 cd apache
