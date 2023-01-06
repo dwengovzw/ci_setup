@@ -14,12 +14,6 @@ services:
       - "docker"
     environment:
       - server_name=localhost
-  docker_registry:
-    container_name: "docker_registry"
-    image: "registry:latest"
-    restart: always
-    networks:
-      - docker
   jenkins:
     container_name: jenkins_server
     restart: always
@@ -32,6 +26,7 @@ services:
             - 'jenkins-data:/var/jenkins_home'
             - 'jenkins-docker-certs:/certs/client:ro'
             - '/var/run/docker.sock:/var/run/docker.sock'
+            - './environments:/var/environments'
     image: 'jenkins_server'
   mongodb:
     container_name: mongodb_server
@@ -39,19 +34,8 @@ services:
     restart: always
     networks:
       - docker
-    #environment:
-    #  MONGO_INITDB_ROOT_USERNAME: root
-    #  MONGO_INITDB_ROOT_PASSWORD: rootpassword
     volumes:
       - mongodb_data_container:/data/db
-
-  #blockly_staging:
-  #  container_name: blockly_server
-  #  restart: always
-  #  networks:
-  #    - docker
-  #  environment:
-  #    - MONGODB_CONNSTRING=mongodb_server
 #  secure_web: 
 #    container_name: "apache_ssl"
 #    image: secure_web_server
