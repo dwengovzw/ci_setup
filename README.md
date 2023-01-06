@@ -82,7 +82,7 @@ certonly --webroot \
 ```bash
 sh deploy.sh
 ```
-- If this hangs add the *-network host* flag to all the build commands in the script.
+- If this hangs add the *--network host* flag to all the build commands in the script.
 
 ## Usage
 
