@@ -18,5 +18,6 @@ EXPOSE 443
 RUN docker-php-ext-install mysqli pdo pdo_mysql zip mbstring
 RUN a2enmod rewrite
 RUN a2enmod ssl
+RUN a2enmod proxy_http
 RUN bash
 #RUN service apache2 restart
