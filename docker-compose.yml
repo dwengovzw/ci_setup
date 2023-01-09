@@ -55,7 +55,7 @@ services:
       - server_name=blockly-staging.dwengo.org
 networks:
   docker:
-    driver: "host"
+    driver: "bridge"
 volumes:
   jenkins-data:
     labels:
