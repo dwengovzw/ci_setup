@@ -12,7 +12,7 @@
 FROM php:7.1-apache
 RUN apt-get update && \
     apt-get install -y \
-        zlib1g-dev net-tools certbot python3-certbot-apache
+        zlib1g-dev net-tools certbot python3-certbot-apache nano
 EXPOSE 80
 EXPOSE 443
 #RUN docker-php-ext-install zip mbstring
