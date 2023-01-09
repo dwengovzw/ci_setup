@@ -46,6 +46,7 @@ services:
     volumes:
       - ./apache_ssl/blockly.conf:/etc/apache2/sites-enabled/blockly.conf
       - ./apache_ssl/html:/var/www/localhost/htdocs
+      - ./apache_ssl/apache2.conf:/etc/apache2/apache2.conf
       - /docker-volumes/etc/letsencrypt/live/blockly-staging.dwengo.org/cert.pem:/etc/letsencrypt/live/blockly-staging.dwengo.org/cert.pem
       - /docker-volumes/etc/letsencrypt/live/blockly-staging.dwengo.org/fullchain.pem:/etc/letsencrypt/live/blockly-staging.dwengo.org/fullchain.pem
       - /docker-volumes/etc/letsencrypt/live/blockly-staging.dwengo.org/privkey.pem:/etc/letsencrypt/live/blockly-staging.dwengo.org/privkey.pem
