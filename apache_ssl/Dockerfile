@@ -15,7 +15,11 @@ RUN apt-get update && \
         zlib1g-dev net-tools
 EXPOSE 80
 EXPOSE 443
-RUN docker-php-ext-install mysqli pdo pdo_mysql zip mbstring
+RUN docker-php-ext-install zip mbstring
+RUN apt install snapd
+RUN snap install core
+RUN snap install --classic certbot
+RUN sudo ln -s /snap/bin/certbot /usr/bin/certbot
 RUN a2enmod rewrite
 RUN a2enmod ssl
 RUN a2enmod proxy_http
