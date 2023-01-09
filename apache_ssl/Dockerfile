@@ -1,6 +1,6 @@
 FROM alpine:latest
 LABEL author="Tom Neutens"
-ENV server_name=blockly.dwengo.org
+ENV server_name=blockly-staging.dwengo.org
 RUN set -x \
     && apk update && apk upgrade \
     && apk add apache2 apache2-proxy

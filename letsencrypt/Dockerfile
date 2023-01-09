@@ -1,6 +1,5 @@
 FROM alpine:latest
-LABEL author="Leon Sczepansky"
-ENV server_name=localhost
+ENV server_name=blockly-staging.dwengo.org
 RUN apk add --no-cache apache2
 RUN rm -rf /var/www/localhost/cgi-bin/
 CMD exec /usr/sbin/httpd -D FOREGROUND -f /etc/apache2/httpd.conf

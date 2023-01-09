@@ -3,13 +3,17 @@ services:
   le-apache:
     container_name: 'le-apache'
     image: lets-encrypt-apache:latest
+    build:
+      context: .
     ports:
       - "80:80"
     volumes:
       - ./httpd.conf:/etc/apache2/httpd.conf
-      - ./html:/var/www/localhost/htdocs/
+      - ./html:/var/www/html/
     networks:
-      - docker-network
+      - docker
+    environment:
+      - server_name=blockly-staging.dwengo.org
 networks:
-  docker-network:
+  docker:
     driver: bridge
