@@ -12,14 +12,10 @@
 FROM php:7.1-apache
 RUN apt-get update && \
     apt-get install -y \
-        zlib1g-dev net-tools python3 python3-venv libaugeas0
+        zlib1g-dev net-tools certbot python3-certbot-apache
 EXPOSE 80
 EXPOSE 443
 #RUN docker-php-ext-install zip mbstring
-RUN python3 -m venv /opt/certbot/
-RUN /opt/certbot/bin/pip install --upgrade pip
-RUN /opt/certbot/bin/pip install certbot certbot-apache
-RUN ln -s /opt/certbot/bin/certbot /usr/bin/certbot
 RUN a2enmod rewrite
 RUN a2enmod ssl
 RUN a2enmod proxy_http
