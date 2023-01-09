@@ -12,11 +12,10 @@
 FROM php:7.1-apache
 RUN apt-get update && \
     apt-get install -y \
-        zlib1g-dev net-tools
+        zlib1g-dev net-tools snapd
 EXPOSE 80
 EXPOSE 443
 RUN docker-php-ext-install zip mbstring
-RUN apt-get install snapd
 RUN snap install -y core
 RUN snap install --classic certbot
 RUN sudo ln -s /snap/bin/certbot /usr/bin/certbot
