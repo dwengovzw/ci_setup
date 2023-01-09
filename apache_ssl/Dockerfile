@@ -16,8 +16,8 @@ RUN apt-get update && \
 EXPOSE 80
 EXPOSE 443
 RUN docker-php-ext-install zip mbstring
-RUN apt install snapd
-RUN snap install core
+RUN apt-get install snapd
+RUN snap install -y core
 RUN snap install --classic certbot
 RUN sudo ln -s /snap/bin/certbot /usr/bin/certbot
 RUN a2enmod rewrite
