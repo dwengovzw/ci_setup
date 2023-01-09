@@ -17,6 +17,8 @@ EXPOSE 80
 EXPOSE 443
 #RUN docker-php-ext-install zip mbstring
 RUN a2enmod rewrite
+RUN a2enmod proxy
+RUN a2enmod headers
 RUN a2enmod ssl
 RUN a2enmod proxy_http
 #RUN bash
