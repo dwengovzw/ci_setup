@@ -42,7 +42,7 @@ services:
     image: secure_web_server
     ports: 
       - "80:80"
-      - "433:433"
+      - "443:443"
     volumes:
       - ./apache_ssl/apache2.conf:/etc/apache2/apache2.conf
       - ./apache_ssl/blockly-staging.dwengo.org.conf:/etc/apache2/sites-enabled/blockly-staging.dwengo.org.conf
