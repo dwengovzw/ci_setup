@@ -9,7 +9,7 @@ services:
 #      - "43303:433"
 #    volumes:
 #      - ./apache/httpd.conf:/etc/apache2/httpd.conf
-#      - ./apache/html:/var/www/html
+#      - ./apache/html:/var/www/localhost/htdocs
 #    networks:
 #      - "docker"
 #    environment:
@@ -45,7 +45,7 @@ services:
       - "433:433"
     volumes:
       - ./apache_ssl/httpd.conf:/etc/apache2/httpd.conf
-      - ./apache_ssl/html:/var/www/html
+      - ./apache_ssl/html:/var/www/localhost/htdocs
       - /docker-volumes/etc/letsencrypt/live/blockly-staging.dwengo.org/cert.pem:/etc/letsencrypt/live/blockly-staging.dwengo.org/cert.pem
       - /docker-volumes/etc/letsencrypt/live/blockly-staging.dwengo.org/fullchain.pem:/etc/letsencrypt/live/blockly-staging.dwengo.org/fullchain.pem
       - /docker-volumes/etc/letsencrypt/live/blockly-staging.dwengo.org/privkey.pem:/etc/letsencrypt/live/blockly-staging.dwengo.org/privkey.pem

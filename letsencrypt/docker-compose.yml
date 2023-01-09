@@ -9,7 +9,7 @@ services:
       - "80:80"
     volumes:
       - ./httpd.conf:/etc/apache2/httpd.conf
-      - ./html:/var/www/html/
+      - ./html:/var/www/localhost/htdocs/
     networks:
       - docker
     environment:
