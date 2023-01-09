@@ -12,13 +12,14 @@
 FROM php:7.1-apache
 RUN apt-get update && \
     apt-get install -y \
-        zlib1g-dev net-tools snapd
+        zlib1g-dev net-tools python3 python3-venv libaugeas0
 EXPOSE 80
 EXPOSE 443
 #RUN docker-php-ext-install zip mbstring
-RUN snap install core; sudo snap refresh core
-RUN snap install --classic certbot
-RUN ln -s /snap/bin/certbot /usr/bin/certbot
+RUN python3 -m venv /opt/certbot/
+RUN /opt/certbot/bin/pip install --upgrade pip
+RUN /opt/certbot/bin/pip install certbot certbot-apache
+RUN ln -s /opt/certbot/bin/certbot /usr/bin/certbot
 RUN a2enmod rewrite
 RUN a2enmod ssl
 RUN a2enmod proxy_http
