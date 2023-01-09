@@ -44,8 +44,7 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - ./apache_ssl/apache2.conf:/etc/apache2/apache2.conf
-      - ./apache_ssl/blockly-staging.dwengo.org.conf:/etc/apache2/sites-enabled/blockly-staging.dwengo.org.conf
+      - ./apache_ssl/httpd.conf:/etc/apache2/httpd.conf
       - ./apache_ssl/html:/var/www/localhost/htdocs
       - /docker-volumes/etc/letsencrypt/live/blockly-staging.dwengo.org/cert.pem:/etc/letsencrypt/live/blockly-staging.dwengo.org/cert.pem
       - /docker-volumes/etc/letsencrypt/live/blockly-staging.dwengo.org/fullchain.pem:/etc/letsencrypt/live/blockly-staging.dwengo.org/fullchain.pem
