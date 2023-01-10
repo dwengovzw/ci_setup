@@ -3,7 +3,7 @@ pipeline {
         dockerfile {
             filename 'jenkins/Dockerfile.jenkinsAgent'
             additionalBuildArgs  '--network host --build-arg JENKINSUID=`id -u jenkins` --build-arg JENKINSGID=`id -g jenkins` --build-arg DOCKERGID=`stat -c %g /var/run/docker.sock`'
-            args '-v /var/run/docker.sock:/var/run/docker.sock -v /var/environments:/var/environments -u jenkins:docker -p 3000:3000 --network="docker"'
+            args '-v /var/run/docker.sock:/var/run/docker.sock -v /var/environments:/var/environments -u jenkins:docker -p 3000:3000 --network="host"'
         }
     }
     stages {
@@ -61,7 +61,7 @@ pipeline {
                     sh 'docker ps -q --filter "name=blockly_development_server" | xargs -r docker stop'
                     sh 'docker ps -aq --filter "name=blockly_development_server" | xargs -r docker rm'
                     sh 'docker build --no-cache -t blockly_development_server .'
-                    sh 'docker run -d -v /var/environments:/var/environments --name=blockly_development_server --restart=always --network="docker_docker" blockly_development_server'
+                    sh 'docker run -d -v /var/environments:/var/environments --name=blockly_development_server --restart=always --network="docker" blockly_development_server'
                 }
                 
             }
