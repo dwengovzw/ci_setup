@@ -33,7 +33,7 @@ sudo apt  install docker-compose
 
 - Create a folder *environments* and add the files *dev.env*, *stagign.env*, *test.env*, and *prod.env* with the correct configurations for your application. (you could also copy them from somwhere else ex. using scp)
 
-- Update the docker-compose.yml file to match your server hostname
+- Update the docker-compose.yml file to match your server hostname (secure web/web, volumes and environment)
 
 ### Get ssl certificates using Letsencrypt
 - Change the server_name config in the /letsencrypt/docker-compose.yml file to match your server hostname.
@@ -57,6 +57,7 @@ certonly --webroot \
 -d [your_server_name] -d [your_server_alias]
 ```
 
+f.e.:
 
 sudo docker run -it --rm \
 -v /docker-volumes/etc/letsencrypt:/etc/letsencrypt \
@@ -72,10 +73,10 @@ certonly --webroot \
 ### Starting the production server
 - Go to the apache_ssl folder.
 - Update the server_name in the Dockerfile
-- Open the httpd.conf file and update the proxy passes according to your needs. The default uses /development, /staging, and /jenkins for development, staging, and jenkins servers respectively. You could add other redirects f.e. to the mongodb db.
+- Open the httpd.conf file and update the proxy passes according to your needs. The default uses /development, /staging, and /jenkins for development, staging, and jenkins servers respectively. You could add other redirects (f.e. to the mongodb db.)
 - Go back to the root of the repository and edit the docker-compose.yml file:
-- Comment out the secure_web service and put the web service in comments
-- Update the server_name config under the environment settings
+- Comment out the secure_web service and put the web service in comments.
+- Update the server_name config under the environment settings.
 - Update the volumes which contain the blockly-staging.dwengo.org part and repace it with your server name. (TODO: update this to be cleaner)
 - Update the deploy.sh script by commenting out the line for the apache server and commenting in the line for the apache_ssl server.
 - run 
@@ -84,12 +85,16 @@ sh deploy.sh
 ```
 - If this hangs add the *--network host* flag to all the build commands in the script.
 
-## Usage
+With this configuration, you should be able to access the $hostname/jenkins url from your browser. Navigate to this url and execute the steps below:
 
-- Run deploy.sh in the root directory of this repository.
+### Setting up a Jenkins build pipeline
+
 - Update the /jenkins/Jenkinsfile.[build] to suit your CI/CD needs.
-- Access jenkins on [hostname]:8081/jenkins.
-- Create a new ***pipline** in jenkins.
+- Make sure you push these changes to this repo (you have forked).
+- Access jenkins on [hostname]/jenkins. (or localhost:8081/jenkins when running locally)
+- Create a new ***pipline** in jenkins and give it a logical name (ex. Development build).
 - In the configuration menu under **Pipeline** select **Pipeline from SCM**.
 - Add the referenct to this repo (f.e. https://github.com/dwengovzw/ci_setup.git).
+- Set the branch to what you want (f.e. */main)
 - Set script path to *jenkins/Jenkinsfile.[build]*
+- Click Save
