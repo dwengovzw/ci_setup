@@ -30,6 +30,8 @@ pipeline {
             steps {
                 dir ('repository'){
                     sh 'npm install --legacy-peer-deps' 
+                    sh 'npm install bcrypt'
+                    sh 'npm audit fix --force'
                 }
             }
         }
