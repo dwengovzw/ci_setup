@@ -36,6 +36,14 @@ services:
       - docker
     volumes:
       - mongodb_data_container:/data/db
+  mongodb_test:
+    container_name: mongodb_test_server
+    image: mongodb_server
+    restart: always
+    networks:
+      - host
+    volumes:
+      - mongodb_test_data_container:/data/db
   secure_web: 
     container_name: "apache_ssl"
     restart: always
@@ -57,7 +65,6 @@ networks:
   docker:
     external: 
       name: docker
-   # driver: "bridge"
 volumes:
   jenkins-data:
     labels:
@@ -68,3 +75,6 @@ volumes:
   mongodb_data_container:
     labels:
       org.dwengo.description: "Mongodb data"
+  mongodb_test_data_container:
+    labels:
+      org.dwengo.description: "Mongodb test database"

@@ -70,6 +70,11 @@ certonly --webroot \
 --webroot-path=/data/letsencrypt \
 -d blockly-staging.dwengo.org
 
+
+Add the following line to the crontab (*sudo crontab -e*):
+
+0 23 * * * docker run --rm -it --name certbot -v "/docker-volumes/etc/letsencrypt:/etc/letsencrypt" -v "/docker-volumes/var/lib/letsencrypt:/var/lib/letsencrypt" -v "/docker-volumes/data/letsencrypt:/data/letsencrypt" -v "/docker-volumes/var/log/letsencrypt:/var/log/letsencrypt" certbot/certbot renew --webroot -w /data/letsencrypt --quiet && docker kill --signal=HUP apache_ssl
+
 ### Starting the production server
 - Go to the apache_ssl folder.
 - Update the server_name in the Dockerfile
