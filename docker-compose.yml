@@ -40,8 +40,7 @@ services:
     container_name: mongodb_test_server
     image: mongodb_server
     restart: always
-    networks:
-      - host
+    network_mode: host
     volumes:
       - mongodb_test_data_container:/data/db
   secure_web: 
