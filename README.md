@@ -40,7 +40,7 @@ sudo apt  install docker-compose
 - Navigate to the letsencrypt folder, build the image, and start the container:
 ```bash
 cd letsencrypt
-docker build -t lets-encrypt-apache . # This command might need the --network host argument (https://github.com/gliderlabs/docker-alpine/issues/307#issuecomment-427246497)
+docker build -t lets-encrypt-apache . 
 docker-compose up -d
 ```
 - While the server is running, start the certbot docker container:
@@ -83,7 +83,7 @@ certonly --webroot \
 ```bash
 sh deploy.sh
 ```
-- If this hangs add the *--network host* flag to all the build commands in the script.
+- If this hangs, see issues described below.
 
 With this configuration, you should be able to access the $hostname/jenkins url from your browser. Navigate to this url and execute the steps below:
 
@@ -98,3 +98,15 @@ With this configuration, you should be able to access the $hostname/jenkins url 
 - Set the branch to what you want (f.e. */main)
 - Set script path to *jenkins/Jenkinsfile.[build]*
 - Click Save
+
+
+### Issues with MTU
+When running docker on a server wich uses virtualized network interfaces you might need to adjust the docker MTU so it is smaller or equal to the mtu of the host network interface. To find the mtu of the host and docker networks run *ip link*. To change the docker mtu add the following json to the /etc/docker/daemon.json file:
+
+```json
+{
+  "mtu": 1454
+}
+```
+
+[https://mlohr.com/docker-mtu/](https://mlohr.com/docker-mtu/)
