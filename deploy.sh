@@ -6,6 +6,9 @@
 # so they can access the required environment settings.
 cp ./environments/* /var/environments/
 
+# Create a docker network for the containers:
+docker network create -d bridge docker
+
 # Build the required docker containers
 docker build --network host -t secure_web_server ./apache_ssl  # Web server with ssl
 #docker build --network host -t web_server ./apache  # Web server without ssl

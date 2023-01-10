@@ -16,4 +16,5 @@ services:
       - server_name=blockly-staging.dwengo.org
 networks:
   docker:
-    driver: bridge
+    external: 
+      name: docker
