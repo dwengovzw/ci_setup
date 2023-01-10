@@ -2,7 +2,7 @@ pipeline {
     agent {
         dockerfile {
             filename 'jenkins/Dockerfile.jenkinsAgent'
-            additionalBuildArgs  '--network docker --build-arg JENKINSUID=`id -u jenkins` --build-arg JENKINSGID=`id -g jenkins` --build-arg DOCKERGID=`stat -c %g /var/run/docker.sock`'
+            additionalBuildArgs  '--network host --build-arg JENKINSUID=`id -u jenkins` --build-arg JENKINSGID=`id -g jenkins` --build-arg DOCKERGID=`stat -c %g /var/run/docker.sock`'
             args '-v /var/run/docker.sock:/var/run/docker.sock -v /var/environments:/var/environments -u jenkins:docker -p 3000:3000 --network="docker"'
         }
     }
