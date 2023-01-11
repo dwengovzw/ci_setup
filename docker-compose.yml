@@ -40,7 +40,10 @@ services:
     container_name: mongodb_test_server
     image: mongodb_server
     restart: always
-    network_mode: host
+    ports:
+      - "27017:27017"
+    networks:
+      - test
     volumes:
       - mongodb_test_data_container:/data/db
   secure_web: 
@@ -64,6 +67,7 @@ networks:
   docker:
     external: 
       name: docker
+  test:
 volumes:
   jenkins-data:
     labels:
