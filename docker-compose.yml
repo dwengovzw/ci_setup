@@ -1,4 +1,4 @@
-version: "3.8"
+version: "3.3"
 services:
 #  web: 
 #    container_name: "apache"
@@ -6,7 +6,7 @@ services:
 #    image: web_server
 #    ports: 
 #      - "8081:80"
-#      - "43303:433"
+#      - "4330:433"
 #    volumes:
 #      - ./apache/httpd.conf:/etc/apache2/httpd.conf
 #      - ./apache/html:/var/www/localhost/htdocs
@@ -17,10 +17,12 @@ services:
   jenkins:
     container_name: jenkins_server
     restart: always
+    ports:
+        - "8080:8080"
     networks:
       - docker
     environment:
-      - JENKINS_OPTS="--prefix=/jenkins"
+      - JENKINS_OPTS="--prefix=/staging/jenkins"
       - '--cap-add=SYS_ADMIN'
     volumes:
             - 'jenkins-data:/var/jenkins_home'
@@ -41,28 +43,28 @@ services:
     image: mongodb_server
     restart: always
     ports:
-      - "27017:27017"
+      - "27018:27017"
     networks:
       - test
     volumes:
       - mongodb_test_data_container:/data/db
-  secure_web: 
-    container_name: "apache_ssl"
-    restart: always
-    image: secure_web_server
-    ports: 
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./apache_ssl/httpd.conf:/etc/apache2/httpd.conf
-      - ./apache_ssl/html:/var/www/localhost/htdocs
-      - /docker-volumes/etc/letsencrypt/live/blockly-staging.dwengo.org/cert.pem:/etc/letsencrypt/live/blockly-staging.dwengo.org/cert.pem
-      - /docker-volumes/etc/letsencrypt/live/blockly-staging.dwengo.org/fullchain.pem:/etc/letsencrypt/live/blockly-staging.dwengo.org/fullchain.pem
-      - /docker-volumes/etc/letsencrypt/live/blockly-staging.dwengo.org/privkey.pem:/etc/letsencrypt/live/blockly-staging.dwengo.org/privkey.pem
-    networks:
-      - "docker"
-    environment:
-      - server_name=blockly-staging.dwengo.org
+#  secure_web: 
+#    container_name: "apache_ssl"
+#    restart: always
+#    image: secure_web_server
+#    ports: 
+      #- "8080:80"
+#      - "4430:443"
+#    volumes:
+#      - ./apache_ssl/httpd.conf:/etc/apache2/httpd.conf
+#      - ./apache_ssl/html:/var/www/localhost/htdocs
+#      - /docker-volumes/etc/letsencrypt/live/blockly-staging.dwengo.org/cert.pem:/etc/letsencrypt/live/blockly-staging.dwengo.org/cert.pem
+#      - /docker-volumes/etc/letsencrypt/live/blockly-staging.dwengo.org/fullchain.pem:/etc/letsencrypt/live/blockly-staging.dwengo.org/fullchain.pem
+#      - /docker-volumes/etc/letsencrypt/live/blockly-staging.dwengo.org/privkey.pem:/etc/letsencrypt/live/blockly-staging.dwengo.org/privkey.pem
+#    networks:
+#      - "docker"
+#    environment:
+#      - server_name=blockly-staging.dwengo.org
 networks:
   docker:
     external: 
