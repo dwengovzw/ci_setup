@@ -105,6 +105,44 @@ With this configuration, you should be able to access the $hostname/jenkins url 
 - Click Save
 
 
+### Setting up a private docker registry for production deployment
+
+-  Pull the default registry container:
+```bash
+docker run -d   -p 5001:5000   --restart=always   --name registry   registry:2
+```
+- Create a secure user
+```bash
+mkdir auth
+username=THE_USERNAME_YOU_WANT_TO_SET
+password=THE_PASSWORD_YOU_WANT_TO_SET
+docker run --entrypoint htpasswd httpd:2 -Bbn $username $password > auth/htpasswd
+```
+- Stop the container
+```bash
+docker container stop registry
+```
+
+- Start the registry with authentication. If you do not run this registry behind a TLS encrypted proxy, make sure you configure TLS in the docker registry itself!
+```bash
+docker run -d \
+  -p 5001:5000 \
+  --restart=always \
+  --name registry \
+  -v "$(pwd)"/auth:/auth \
+  -e "REGISTRY_AUTH=htpasswd" \
+  -e "REGISTRY_AUTH_HTPASSWD_REALM=Registry Realm" \
+  -e REGISTRY_AUTH_HTPASSWD_PATH=/auth/htpasswd \
+  registry:2
+```
+
+- Push an image to the registry:
+```bash
+docker image tag $image_name:$tag localhost:5001/$username/$image_name:$tag
+docker image push localhost:5001/$username/$image_name:$tag
+```
+
+
 ### Issues with MTU
 When running docker on a server wich uses virtualized network interfaces you might need to adjust the docker MTU so it is smaller or equal to the mtu of the host network interface. To find the mtu of the host and docker networks run *ip link*. To change the docker mtu add the following json to the /etc/docker/daemon.json file:
 

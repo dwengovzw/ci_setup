@@ -1,0 +1,72 @@
+pipeline {
+    agent {
+        dockerfile {
+            filename 'jenkins/Dockerfile.jenkinsAgent'
+            additionalBuildArgs  '--network host --build-arg JENKINSUID=`id -u jenkins` --build-arg JENKINSGID=`id -g jenkins` --build-arg DOCKERGID=`stat -c %g /var/run/docker.sock`'
+            args '-v /var/run/docker.sock:/var/run/docker.sock -v /var/environments:/var/environments -u jenkins:docker -p 3000:3000 --network="host"'
+        }
+    }
+    stages {
+        stage('INFO') {
+            steps {
+                sh 'docker images'
+                sh 'docker network ls'
+            }
+        }
+        stage('Clone') { 
+            steps {
+                dir ('repository') {
+                    checkout(scm: [
+                        $class: 'GitSCM', 
+                        branches: [[name: 'unified']], 
+                        userRemoteConfigs: [
+                            [ url: 'https://github.com/dwengovzw/Blockly-for-Dwenguino.git' ]
+                        ]
+                    ])
+                }
+            }
+        }
+        stage('Install') { 
+            steps {
+                dir ('repository'){
+                    sh 'npm install --legacy-peer-deps' 
+                    sh 'npm install bcrypt --legacy-peer-deps'
+                }
+            }
+        }
+        stage('Build') { 
+            steps {
+                dir ('repository'){
+                    sh 'npm run build' 
+                }
+            }
+        }
+        stage('Test') { 
+            steps {
+                dir ('repository'){
+                    sh 'cp /var/environments/test.env .env'
+                    sh 'npm run test' 
+                }
+                
+            }
+        }
+        stage('Deploy') { 
+            steps {
+                dir ('repository'){
+                    sh 'touch Dockerfile'
+                    sh 'echo "FROM blockly_development_server:latest" > Dockerfile'
+                    sh 'echo "COPY . /home/node/deploy/" >> Dockerfile'
+                    sh 'echo "CMD ls /home/node/deploy" >> Dockerfile'
+                    sh 'echo "CMD bash /home/node/deploy/deploy/docker_deploy.sh dev.env" >> Dockerfile'
+                    sh 'cat Dockerfile'
+                    sh 'docker build --no-cache -t blockly_production_server .'
+                    sh 'grep "^password" /home/jenkins/env/hub_params.env | sed -r "s/^password\=(.*)$/\1/" | docker login -u tomneutens --password-stdin'
+                    sh 'tag=$(grep "^version" /home/jenkins/env/hub_params.env | sed -r "s/^version\=(.*)$/\1/" )'
+                    sh 'docker image tag blockly_production_server:latest tomneutens/blockly_production_server:$tag'
+                    sh 'docker image push tomneutens/blockly_production_server:$tag'
+                }
+                
+            }
+        }
+    }
+}
