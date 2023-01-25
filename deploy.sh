@@ -7,9 +7,9 @@
 cp ./environments/* /var/environments/
 
 # Create a docker network for the containers:
-docker network create -d bridge --ip-range=172.28.0.0/8 docker
+docker network create -d bridge --subnet=172.28.0.0/24 docker
 
-docker network create -d bridge --ip-range=172.28.1.0/8 test
+docker network create -d bridge --subnet=172.28.1.0/24 test
 
 # Build the required docker containers
 # The kiks server setup runs behind native nginx 
