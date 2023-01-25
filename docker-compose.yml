@@ -70,6 +70,8 @@ networks:
     external: 
       name: docker
   test:
+    external:
+      name: test
 volumes:
   jenkins-data:
     labels:

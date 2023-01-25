@@ -57,7 +57,7 @@ pipeline {
                     sh 'echo "FROM blockly_development_server:latest" > Dockerfile'
                     sh 'echo "COPY . /home/node/deploy/" >> Dockerfile'
                     sh 'echo "CMD ls /home/node/deploy" >> Dockerfile'
-                    sh 'echo "CMD bash /home/node/deploy/deploy/docker_deploy.sh dev.env" >> Dockerfile'
+                    sh 'echo "CMD bash /home/node/deploy/deploy/docker_deploy.sh prod.env" >> Dockerfile'
                     sh 'cat Dockerfile'
                     sh 'docker build --no-cache -t blockly_production_server .'
                     sh 'grep "^password" /home/jenkins/env/hub_params.env | sed -r "s/^password\\=(.*)$/\\1/" | docker login -u tomneutens --password-stdin'

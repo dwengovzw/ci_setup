@@ -1,0 +1,41 @@
+version: "3.3"
+services:
+  blockly_production:
+    container_name: blockly_production_server
+    image: tomneutens/blockly_production_server
+    restart: always
+    networks:
+      - docker
+    volumes:
+      - /var/environments:/var/environments
+  mongodb:
+    container_name: mongodb_server
+    image: mongodb_server
+    restart: always
+    networks:
+      - docker
+    volumes:
+      - mongodb_data_container:/data/db
+  secure_web: 
+    container_name: "apache_ssl"
+    restart: always
+    image: secure_web_server
+    ports: 
+     #- "8080:80"
+      - "4430:443"
+    volumes:
+      - ./apache_ssl/httpd.conf:/etc/apache2/httpd.conf
+      - ./apache_ssl/html:/var/www/localhost/htdocs
+      - /docker-volumes/etc/letsencrypt/live/blockly-staging.dwengo.org/cert.pem:/etc/letsencrypt/live/blockly-staging.dwengo.org/cert.pem
+      - /docker-volumes/etc/letsencrypt/live/blockly-staging.dwengo.org/fullchain.pem:/etc/letsencrypt/live/blockly-staging.dwengo.org/fullchain.pem
+      - /docker-volumes/etc/letsencrypt/live/blockly-staging.dwengo.org/privkey.pem:/etc/letsencrypt/live/blockly-staging.dwengo.org/privkey.pem
+    networks:
+      - "docker"
+    environment:
+      - server_name=blockly-staging.dwengo.org
+networks:
+  docker:
+volumes:
+  mongodb_data_container:
+    labels:
+      org.dwengo.description: "Mongodb data"
