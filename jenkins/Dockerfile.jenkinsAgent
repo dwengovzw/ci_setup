@@ -47,5 +47,5 @@ RUN useradd -c "Jenkins user" -g ${JENKINSGID} -G ${DOCKERGID} -M -N -u ${JENKIN
 
 # create default home directory for jenkins user
 RUN mkdir /home/jenkins
-COPY hub_params.env /home/jenkins/env/hub_params.env
+#COPY hub_params.env /home/jenkins/env/hub_params.env
 RUN chown -R jenkins:jenkins /home/jenkins 
