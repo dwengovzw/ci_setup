@@ -29,7 +29,7 @@ pipeline {
         stage('Install') { 
             steps {
                 dir ('repository'){
-                    sh 'npm install && && npm update' 
+                    sh 'npm install && npm update' 
                     sh 'npm install bcrypt --legacy-peer-deps'
                     sh 'cd ./node_modules/puppeteer && npm install && cd ../..'
                 }
