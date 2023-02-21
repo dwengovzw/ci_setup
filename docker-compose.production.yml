@@ -2,7 +2,7 @@ version: "3.3"
 services:
   blockly_production:
     container_name: blockly_production_server
-    image: tomneutens/blockly_production_server
+    image: tomneutens/blockly_production_server:latest
     restart: always
     ports:
       - "12033:12032"

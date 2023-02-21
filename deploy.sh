@@ -4,7 +4,7 @@
 # This might require root access or permission changes for this dir
 # This directory will be mounted as a bind mout in the docker containers 
 # so they can access the required environment settings.
-cp ./environments/* /var/environments/
+#cp ./environments/* /var/environments/
 
 # Create a docker network for the containers:
 docker network create -d bridge --subnet=172.28.0.0/24 docker
