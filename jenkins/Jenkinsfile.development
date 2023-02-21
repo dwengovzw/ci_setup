@@ -55,6 +55,7 @@ pipeline {
         stage('Deploy') { 
             steps {
                 dir ('repository'){
+                    sh 'cp /var/environments/dev.env .env'
                     sh 'touch Dockerfile'
                     sh 'echo "FROM blockly_development_server:latest" > Dockerfile'
                     sh 'echo "COPY . /home/node/deploy/" >> Dockerfile'
