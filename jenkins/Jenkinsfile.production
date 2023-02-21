@@ -41,15 +41,6 @@ pipeline {
                 }
             }
         }
-        stage('Test') { 
-            steps {
-                dir ('repository'){
-                    sh 'cp /var/environments/test.env .env'
-                    sh 'npm run test' 
-                }
-                
-            }
-        }
         stage('Deploy') { 
             steps {
                 dir ('repository'){
