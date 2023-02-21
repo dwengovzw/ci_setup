@@ -51,6 +51,8 @@ pipeline {
                     sh 'echo "CMD bash /home/node/deploy/deploy/docker_deploy.sh prod.env" >> Dockerfile'
                     sh 'cat Dockerfile'
                     sh 'docker build --no-cache -t blockly_production_server .'
+                    sh 'cat /var/environments/hub_params.env'
+                    sh 'grep "^password" /var/environments/hub_params.env | echo'
                     sh 'grep "^password" /var/environments/hub_params.env | sed -r "s/^password\\=(.*)$/\\1/" | docker login -u tomneutens --password-stdin'
                     sh 'tag=$(grep "^version" /var/environments/hub_params.env | sed -r "s/^version\\=(.*)$/\\1/" )'
                     sh 'docker image tag blockly_production_server:latest tomneutens/blockly_production_server:$tag'
