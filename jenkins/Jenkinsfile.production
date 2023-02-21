@@ -49,6 +49,7 @@ pipeline {
                     sh 'echo "FROM blockly_development_server:latest" > Dockerfile'
                     sh 'echo "COPY . /home/node/deploy/" >> Dockerfile'
                     sh 'echo "CMD ls /home/node/deploy" >> Dockerfile'
+                    sh 'cat /home/node/deploy/deploy/docker_deploy.sh'
                     sh 'echo "CMD bash /home/node/deploy/deploy/docker_deploy.sh prod.env" >> Dockerfile'
                     sh 'cat Dockerfile'
                     sh 'docker build --no-cache -t blockly_production_server .'
