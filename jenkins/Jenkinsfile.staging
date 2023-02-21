@@ -39,7 +39,7 @@ pipeline {
         stage('Build') { 
             steps {
                 dir ('repository'){
-                    sh 'npm run build-dev' 
+                    sh 'npm run build' 
                 }
             }
         }
