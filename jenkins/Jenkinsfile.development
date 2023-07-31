@@ -31,7 +31,6 @@ pipeline {
         stage('Install') { 
             steps {
                 dir ('repository'){
-                    sh "npm ci"
                     sh 'npm install' 
                     sh 'node --version'
                     sh 'npm install bcrypt --legacy-peer-deps'
