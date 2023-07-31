@@ -27,8 +27,6 @@ RUN echo \
   "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
   sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
-RUN "echo $(lsb_release -cs)"
-
 RUN apt-get -y update && \
  apt-get -y install \
    docker-ce \
