@@ -41,6 +41,7 @@ RUN usermod -u 1011 node
 RUN echo ${JENKINSGID}
 RUN echo ${JENKINSUID}
 RUN echo ${DOCKERGID}
+RUN less /etc/group
 RUN groupadd -g ${JENKINSGID} jenkins
 RUN groupmod -g ${DOCKERGID} docker
 RUN cat /etc/passwd
