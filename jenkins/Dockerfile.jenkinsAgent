@@ -1,4 +1,4 @@
-FROM node:18.12
+FROM node:18.17
 
 # More info https://stackoverflow.com/a/55578829/13057688
 
