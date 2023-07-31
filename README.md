@@ -28,7 +28,7 @@ cd deploy
 ```
 - install docker-compose:
 ```bash
-sudo apt  install docker-compose
+sudo apt install docker-compose
 ```
 
 - Create a folder *environments* and add the files *dev.env*, *stagign.env*, *test.env*, and *prod.env* with the correct configurations for your application. (you could also copy them from somwhere else ex. using scp)

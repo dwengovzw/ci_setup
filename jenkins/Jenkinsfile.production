@@ -51,7 +51,7 @@ pipeline {
                     sh 'echo "CMD ls /home/node/deploy" >> Dockerfile'
                     sh 'echo "CMD bash /home/node/deploy/deploy/docker_deploy.sh prod.env" >> Dockerfile'
                     sh 'cat Dockerfile'
-                    sh 'docker build --no-cache -t blockly_production_server .'
+                    sh 'docker build --no-cache --squash --compress -t blockly_production_server .'
                     sh 'grep "^password" /var/environments/hub_params.env | echo'
                     sh 'grep "^password" /var/environments/hub_params.env | sed -r "s/^password\\=(.*)$/\\1/" | echo'
                     sh 'grep "^password" /var/environments/hub_params.env | sed -r "s/^password\\=(.*)$/\\1/" | docker login -u tomneutens --password-stdin'
