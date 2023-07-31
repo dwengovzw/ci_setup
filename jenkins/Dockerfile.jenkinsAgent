@@ -42,6 +42,7 @@ RUN echo ${JENKINSGID}
 RUN echo ${JENKINSUID}
 RUN echo ${DOCKERGID}
 RUN cat /etc/group
+RUN groupmod -g 996 systemd-journal
 RUN groupadd -g ${JENKINSGID} jenkins
 RUN groupmod -g ${DOCKERGID} docker
 RUN cat /etc/passwd
