@@ -18,6 +18,16 @@ services:
       - docker
     volumes:
       - mongodb_data_container:/data/db
+  backup:
+    image: offen/docker-volume-backup:v2.28.0
+    restart: always
+    env_file: ./backup.env
+    volumes:
+      # This allows the tool to stop and restart all
+      # containers labeled as docker-volume-backup.stop-during-backup
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      # All volumes mounted to /backup/<some-name> will be backed up
+      - mongodb_data_container:/backup/blockly_database:ro
 networks:
   docker:
 volumes:
