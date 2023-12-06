@@ -1,3 +1,3 @@
-FROM mongo:4.2.23
+FROM mongo:6.0.5
 LABEL author="Tom Neutens"
 ENV server_name=localhost
