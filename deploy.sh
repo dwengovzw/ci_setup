@@ -22,4 +22,4 @@ docker build -t mongodb_server ./mongodb  # Build docker container for database
 docker build -t blockly_development_server ./blockly_development  # Build image for development deploy
 docker build -t blockly_staging_server ./blockly_development  # Build image for staging deploy
 
-docker-compose up -d  # Start containers in deamon mode
+docker compose up -d  # Start containers in deamon mode
