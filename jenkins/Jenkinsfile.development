@@ -32,6 +32,7 @@ pipeline {
             steps {
                 dir ('repository'){
                     sh 'npm install' 
+                    sh 'npm i @popperjs/core'
                     sh 'node --version'
                     sh 'npm install bcrypt --legacy-peer-deps'
                     sh 'cd ./node_modules/puppeteer && npm install && cd ../..'
