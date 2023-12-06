@@ -29,7 +29,10 @@ pipeline {
         stage('Install') { 
             steps {
                 dir ('repository'){
-                    sh 'npm install --force' 
+                    sh 'npm install' 
+                    sh 'npm ci'
+                    sh 'npm i @popperjs/core'
+                    sh 'npm i jest-environment-node'
                     sh 'node --version'
                     sh 'npm install bcrypt --legacy-peer-deps'
                     sh 'cd ./node_modules/puppeteer && npm install && cd ../..'
