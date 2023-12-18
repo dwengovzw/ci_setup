@@ -35,6 +35,7 @@ pipeline {
                     sh 'npm ci'
                     sh 'npm i @popperjs/core'
                     sh 'npm i jest-environment-node'
+                    sh 'npm install --save-dev jest-puppeteer'
                     sh 'node --version'
                     sh 'npm install bcrypt'
                 }
