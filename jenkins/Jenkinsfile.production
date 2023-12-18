@@ -29,8 +29,8 @@ pipeline {
         stage('Install') { 
             steps {
                 dir ('repository'){
-                    sh 'npm install --legacy-peer-deps' 
-                    sh 'npm install bcrypt --legacy-peer-deps'
+                    sh 'npm install' 
+                    sh 'npm install bcrypt'
                 }
             }
         }
