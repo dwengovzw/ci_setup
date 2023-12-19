@@ -30,7 +30,9 @@ pipeline {
             steps {
                 dir ('repository'){
                     sh 'npm install' 
+                    sh 'npm ci'
                     sh 'npm install bcrypt'
+                    sh 'node --version'
                 }
             }
         }
