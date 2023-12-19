@@ -31,7 +31,9 @@ pipeline {
                 dir ('repository'){
                     sh 'npm install' 
                     sh 'npm ci'
-                    sh 'npm install bcrypt'
+                    sh 'npm i @popperjs/core'
+                    sh 'npm i jest-environment-node'
+                    sh 'npm install bcrypt --legacy-peer-deps'
                     sh 'node --version'
                 }
             }
