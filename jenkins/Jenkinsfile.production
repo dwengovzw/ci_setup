@@ -55,8 +55,6 @@ pipeline {
                     sh 'echo "CMD ls /home/node/deploy" >> Dockerfile'
                     sh 'echo "CMD bash /home/node/deploy/deploy/docker_deploy.sh prod.env" >> Dockerfile'
                     sh 'cat Dockerfile'
-                    sh 'docker ps -q --filter "name=blockly_production_server" | xargs -r docker stop'
-                    sh 'docker ps -aq --filter "name=blockly_production_server" | xargs -r docker rm'
                     sh 'docker build --no-cache --squash --compress -t blockly_production_server .'
                     sh 'grep "^password" /var/environments/hub_params.env | echo'
                     sh 'grep "^password" /var/environments/hub_params.env | sed -r "s/^password\\=(.*)$/\\1/" | echo'
