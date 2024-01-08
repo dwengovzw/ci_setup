@@ -31,7 +31,7 @@ pipeline {
         stage('Install') { 
             steps {
                 dir ('repository'){
-                    sh 'npm install' 
+                    sh 'npm install --ignore-scripts puppeteer' 
                     sh 'npm ci'
                     sh 'npm i @popperjs/core'
                     sh 'npm i jest-environment-node'
