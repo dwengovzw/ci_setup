@@ -31,6 +31,7 @@ pipeline {
                 dir ('repository'){
                     sh 'npm install' 
                     sh 'npm ci'
+                    sh 'npm dedupe'
                     sh 'npm i @popperjs/core'
                     sh 'npm i jest-environment-node'
                     sh 'node --version'
