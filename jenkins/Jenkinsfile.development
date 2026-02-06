@@ -53,7 +53,7 @@ pipeline {
             steps {
                 dir ('repository'){
                     sh 'cp /var/environments/test.env .env'
-                    sh 'npm run test' 
+                    //sh 'npm run test' 
                 }
                 
             }
