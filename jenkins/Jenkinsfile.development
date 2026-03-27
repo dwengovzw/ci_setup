@@ -45,6 +45,7 @@ pipeline {
         stage('Build') { 
             steps {
                 dir ('repository'){
+                    sh 'npm run clean-backend'
                     sh 'npm run build-dev' 
                 }
             }
