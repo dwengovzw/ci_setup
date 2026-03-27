@@ -19,7 +19,7 @@ docker network create -d bridge --subnet=172.28.1.0/24 test
 docker build --build-arg DOCKERGID=`stat -c %g /var/run/docker.sock` -t jenkins_server ./jenkins  # Build docker container for jenkins
 docker build -t mongodb_server ./mongodb  # Build docker container for database
 
-docker build -t blockly_development_server ./blockly_development  # Build image for development deploy
+docker build -t blockly_development_server_base ./blockly_development  # Build image for development deploy
 docker build -t blockly_staging_server ./blockly_development  # Build image for staging deploy
 
 docker compose up -d  # Start containers in deamon mode
