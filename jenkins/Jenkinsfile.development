@@ -62,6 +62,8 @@ pipeline {
         stage('Deploy') { 
             steps {
                 dir ('repository'){
+                    sh 'pwd'
+                    sh 'ls'
                     sh 'cp /var/environments/dev.env /home/node/deploy/backend/.env'
                     sh 'touch Dockerfile'
                     sh 'echo "FROM blockly_development_server_base:latest" > Dockerfile'
