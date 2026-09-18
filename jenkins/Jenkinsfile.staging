@@ -11,6 +11,8 @@ pipeline {
             steps {
                 sh 'docker images'
                 sh 'docker network ls'
+                sh 'node -v'
+                sh 'npm -v'
             }
         }
         stage('Clone') { 
@@ -29,20 +31,21 @@ pipeline {
         stage('Install') { 
             steps {
                 dir ('repository'){
-                    sh 'npm install' 
+                    sh 'npm install --ignore-scripts puppeteer' 
                     sh 'npm ci'
-                    sh 'npm dedupe'
                     sh 'npm i @popperjs/core'
+                    sh 'npm dedupe'
                     sh 'npm i jest-environment-node'
+                    sh 'npm install --save-dev jest-puppeteer'
                     sh 'node --version'
-                    sh 'npm install bcrypt --legacy-peer-deps'
-                    sh 'cd ./node_modules/puppeteer && npm install && cd ../..'
+                    sh 'npm install bcrypt'
                 }
             }
         }
         stage('Build') { 
             steps {
                 dir ('repository'){
+                    sh 'npm run clean-backend'
                     sh 'npm run build' 
                 }
             }
@@ -61,7 +64,7 @@ pipeline {
                 dir ('repository'){
                     sh 'cp /var/environments/staging.env .env'
                     sh 'touch Dockerfile'
-                    sh 'echo "FROM blockly_staging_server:latest" > Dockerfile'
+                    sh 'echo "FROM blockly_development_server_base:latest" > Dockerfile'
                     sh 'echo "COPY . /home/node/deploy/" >> Dockerfile'
                     sh 'echo "CMD ls /home/node/deploy" >> Dockerfile'
                     sh 'echo "CMD bash /home/node/deploy/deploy/docker_deploy.sh staging.env" >> Dockerfile'
